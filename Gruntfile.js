@@ -27,7 +27,15 @@ module.exports = function( grunt ) {
         connect: {
             server: {
                 options: {
-                    port: 8080
+                    port: 8080,
+                    middleware: function(connect, options, middlewares) {
+                      middlewares.unshift(function(req, res, next) {
+                        res.setHeader('Access-Control-Allow-Origin',
+                            'http://localhost:5988');
+                        return next();
+                      });
+                      return middlewares;
+                    }
                 }
             },
             test: {
