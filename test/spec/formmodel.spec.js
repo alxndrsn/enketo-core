@@ -615,3 +615,14 @@ describe( 'Using XPath with default namespace', function() {
     } );
 
 } );
+
+describe( 'irrelevant fields are excluded from the model output', function() {
+    it( 'works for a simple model', function() {
+        var model = new Model( '<model xmlns:jr="http://openrosa.org/javarosa"><instance><data><one/></data></instance>' +
+                '<bind nodeset="/data/one" relevant="false()"/>' +
+                '</model>' );
+        model.init();
+
+        expect( model.getStr() ).toEqual( '<data/>' );
+    } );
+} );
