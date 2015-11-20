@@ -113,16 +113,19 @@ function Transformer() {
                     getProcessor( '../build/xsl/openrosa2xmlmodel.xsl' ),
                     getProcessor( '../build/xsl/openrosa2html5form.xsl' ),
                 ] )
-                .then( function( form, modelProcessor, htmlProcessor ) {
+                .then( function() {
+                    var form = arguments[0],
+                        modelProcessor = arguments[1],
+                        htmlProcessor = arguments[2];
                     return Promise.all( [
                         xslt( form, modelProcessor ),
                         xslt( form, htmlProcessor ),
                     ] );
                 } )
-                .then( function( model, html ) {
+                .then( function() {
                     return {
-                        form: html,
-                        model: model,
+                        model: arguments[0],
+                        form: arguments[1],
                     };
                 } )
                 .catch( console.error.bind( console ) );
