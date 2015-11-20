@@ -86,6 +86,13 @@ function Transformer() {
         } );
     }
 
+    function getForm( url ) {
+        return fetchFrom( url )
+            .then( function( data ) {
+                return $.parseXML( data );
+            } );
+    }
+
     function getProcessor( url ) {
         return fetchFrom( url )
             .then( function( data ) {
@@ -110,7 +117,7 @@ function Transformer() {
     return {
         transform: function( formUrl ) {
             return Promise.all( [
-                    fetchFrom( formUrl ),
+                    getForm( formUrl ),
                     getProcessor( '../build/xsl/openrosa2xmlmodel.xsl' ),
                     getProcessor( '../build/xsl/openrosa2html5form.xsl' ),
                 ] )
