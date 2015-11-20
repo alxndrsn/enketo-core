@@ -1,0 +1,26 @@
+#!/bin/bash -eu
+
+tmp=$(mktemp -dt "$0.XXXXXXXXXX")
+
+currentBranch=$(git branch | grep '^*' | sed -E 's/\* //')
+git checkout gh-pages
+git reset --hard "$currentBranch"
+
+echo "[$0] Removing build files..."
+grep '^/build' .gitignore | sed -E s_^/__ | xargs rm -rf
+
+echo "[$0] Updating .gitignore to include built files..."
+sed -E '/^\/build/d' .gitignore > "$tmp/.gitignore"
+mv "$tmp/.gitignore" .gitignore
+
+echo "[$0] Building..."
+npm install
+grunt
+
+echo "[$0] Updating git..."
+git add .
+git commit -m "[$0] gh-pages update from $currentBranch"
+git push -f "$origin" gh-pages
+
+git checkout -
+echo "[$0] Completed successfully."
