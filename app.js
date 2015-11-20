@@ -103,6 +103,8 @@ function Transformer() {
     }
 
     function xslt( doc, stylesheet ) {
+        var xmlSerializer = new XMLSerializer();
+
         return new Promise( function( resolve, reject ) {
             try {
                 var transformedDoc = stylesheet.transformToDocument( doc ),
