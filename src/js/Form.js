@@ -1809,10 +1809,10 @@ define( function( require, exports, module ) {
             } );
 
             model.$.on( 'dataupdate', function( event, updated ) {
-//                that.calcUpdate( updated ); //EACH CALCUPDATE THAT CHANGES A VALUE TRIGGERS ANOTHER CALCUPDATE => INEFFICIENT
-//                that.branchUpdate( updated );
-//                that.outputUpdate( updated );
-//                that.itemsetUpdate( updated );
+                that.calcUpdate( updated ); //EACH CALCUPDATE THAT CHANGES A VALUE TRIGGERS ANOTHER CALCUPDATE => INEFFICIENT
+                that.branchUpdate( updated );
+                that.outputUpdate( updated );
+                that.itemsetUpdate( updated );
                 // edit is fired when the model changes after the form has been initialized
                 that.editStatus.set( true );
             } );
