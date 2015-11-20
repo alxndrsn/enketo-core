@@ -25,10 +25,12 @@
         "test": "grunt test"
     },
     "devDependencies": {
+        "enketo-xslt": "git://github.com/alxndrsn/enketo-client-side-transformer.git#cb8e9cba8fa9996834be0405ecc96349f0882dd1",
         "grunt": "0.4.x",
         "grunt-browserify": "4.0.x",
         "grunt-concurrent": "2.x.x",
         "grunt-contrib-connect": "0.x.x",
+        "grunt-contrib-copy": "^0.8.2",
         "grunt-contrib-jshint": "0.x.x",
         "grunt-contrib-uglify": "0.9.x",
         "grunt-contrib-watch": "0.x.x",

@@ -24,7 +24,8 @@ if ( getURLParameter( 'touch' ) === 'true' ) {
 // check if HTML form is hardcoded or needs to be retrieved
 if ( getURLParameter( 'xform' ) !== 'null' ) {
     $( '.guidance' ).remove();
-    $.getJSON( 'http://xslt-dev.enketo.org/transform?xform=' + getURLParameter( 'xform' ), function( survey ) {
+
+    new Transformer().transform( getURLParameter( 'xform' ) ).then( function( survey ) {
         formStr = survey.form;
         modelStr = survey.model;
         $( '.form-header' ).after( formStr );
@@ -69,4 +70,62 @@ function getURLParameter( name ) {
     return decodeURI(
         ( new RegExp( name + '=' + '(.+?)(&|$)' ).exec( location.search ) || [ null, null ] )[ 1 ]
     );
+}
+
+function Transformer() {
+    function fetchFrom( url ) {
+        return new Promise( function( resolve, reject ) {
+            $.ajax( url )
+                .done( function( data ) {
+                    resolve( data );
+                } )
+                .fail( function( jqXHR, textStatus, errorThrown ) {
+                    reject( new Error( 'Failed to fetch ' + url, jqXHR, textStatus, errorThrown ) );
+                } );
+        } );
+    }
+
+    function getProcessor( url ) {
+        return fetchFrom( url )
+            .then( function( data ) {
+                var processor = new XSLTProcessor();
+                processor.importStylesheet( data );
+                return processor;
+            } );
+    }
+
+    function xslt( doc, stylesheet ) {
+        return new Promise( function( resolve, reject ) {
+            try {
+                var transformedDoc = stylesheet.transformToDocument( doc ),
+                    rootElement = transformedDoc.documentElement.firstElementChild;
+                resolve( xmlSerializer.serializeToString( rootElement ) );
+            } catch( e ) {
+                reject( e );
+            }
+        } );
+    }
+
+    return {
+        transform: function( formUrl ) {
+            return Promise.all( [
+                    fetchFrom( formUrl ),
+                    getProcessor( '../build/xsl/openrosa2xmlmodel.xsl' ),
+                    getProcessor( '../build/xsl/openrosa2html5form.xsl' ),
+                ] )
+                .then( function( form, modelProcessor, htmlProcessor ) {
+                    return Promise.all( [
+                        xslt( form, modelProcessor ),
+                        xslt( form, htmlProcessor ),
+                    ] );
+                } )
+                .then( function( model, html ) {
+                    return {
+                        form: html,
+                        model: model,
+                    };
+                } )
+                .catch( console.error.bind( console ) );
+        },
+    };
 }

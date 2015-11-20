@@ -117,6 +117,14 @@ module.exports = function( grunt ) {
                 },
             },
         },
+        copy: {
+            xslt: {
+                src: 'node_modules/enketo-client-side-transformer/xslt/client-side/openrosa2*.xsl',
+                dest: 'build/xsl/',
+                expand: true,
+                flatten: true,
+            },
+        },
     } );
 
     grunt.registerTask( 'compile', [ 'browserify', 'uglify' ] );
@@ -124,5 +132,5 @@ module.exports = function( grunt ) {
     grunt.registerTask( 'style', [ 'sass' ] );
     grunt.registerTask( 'server', [ 'connect:server:keepalive' ] );
     grunt.registerTask( 'develop', [ 'browserify', 'concurrent:develop' ] );
-    grunt.registerTask( 'default', [ 'style', 'compile' ] );
+    grunt.registerTask( 'default', [ 'style', 'compile', 'copy:xslt' ] );
 };
