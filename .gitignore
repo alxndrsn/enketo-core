@@ -1,9 +1,4 @@
 /node_modules/
-/build/css/
-/build/fetch/
-/build/js/
-/build/lib/
-/build/xsl/
 /lib/bower-components/
 temp
 .sass-cache
