@@ -12,6 +12,7 @@ window.jQuery = $;
 var support = require( './src/js/support' );
 var Form = require( './src/js/Form' );
 var fileManager = require( './src/js/file-manager' );
+require( 'lie' );
 
 var loadErrors, form, formStr, modelStr;
 
