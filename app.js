@@ -30,7 +30,8 @@ if ( getURLParameter( 'xform' ) !== 'null' ) {
         modelStr = survey.model;
         $( '.form-header' ).after( formStr );
         initializeForm();
-    } );
+    } )
+    .catch( console.error.bind( console ) );
 } else if ( $( 'form.or' ).length > 0 ) {
     $( '.guidance' ).remove();
     modelStr = globalModelStr;
@@ -127,8 +128,7 @@ function Transformer() {
                         model: arguments[0],
                         form: arguments[1],
                     };
-                } )
-                .catch( console.error.bind( console ) );
+                } );
         },
     };
 }
