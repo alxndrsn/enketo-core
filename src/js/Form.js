@@ -627,6 +627,7 @@ define( function( require, exports, module ) {
                 index = index || 0;
 
                 if ( this.getInputType( $form.find( '[data-name="' + name + '"]' ).eq( 0 ) ) === 'radio' ) {
+                    if ( true ) return;
                     type = 'radio';
                     $inputNodes = this.getWrapNodes( $form.find( '[data-name="' + name + '"]' ) ).eq( index ).find( '[data-name="' + name + '"]' );
                 } else {
