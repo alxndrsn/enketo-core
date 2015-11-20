@@ -1809,7 +1809,7 @@ define( function( require, exports, module ) {
             } );
 
             model.$.on( 'dataupdate', function( event, updated ) {
-                that.calcUpdate( updated ); //EACH CALCUPDATE THAT CHANGES A VALUE TRIGGERS ANOTHER CALCUPDATE => INEFFICIENT
+//                that.calcUpdate( updated ); //EACH CALCUPDATE THAT CHANGES A VALUE TRIGGERS ANOTHER CALCUPDATE => INEFFICIENT
                 that.branchUpdate( updated );
                 that.outputUpdate( updated );
                 that.itemsetUpdate( updated );
