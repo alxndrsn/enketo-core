@@ -1,5 +1,6 @@
 #!/bin/bash -eu
 
+origin="alxndrsn"
 tmp=$(mktemp -dt "$0.XXXXXXXXXX")
 
 currentBranch=$(git branch | grep '^*' | sed -E 's/\* //')
