@@ -3,6 +3,11 @@ dist: trusty
 language: node_js
 node_js:
   - lts/*
+env:
+  - TZ=GMT
+  - TZ='Europe/London'
+  - TZ='Pacific/Kiritimati'
+  - TZ='Etc/GMT+12'
 addons:
   apt:
     packages:
